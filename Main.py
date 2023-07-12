@@ -5,6 +5,7 @@ import sys
 import speech_recognition as sr
 import datetime
 import wikipedia
+import subprocess
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -42,11 +43,38 @@ def takecommand():
             return 'none'
         return query
 
+
+def run_powershell_command(command):
+    try:
+        # Run the PowerShell command
+        process = subprocess.Popen(["powershell", command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        output, error = process.communicate()
+
+        # Decode the output and error
+        output = output.decode("utf-8").strip()
+        error = error.decode("utf-8").strip()
+
+        # Check for any errors
+        if error:
+            return error
+        else:
+            # Display the output
+            return output
+    except Exception as e:
+        print("An error occurred:", str(e))
+
+# # Example usage
+# input_data = "example input"
+# command = f"bard-cli {input_data}"
+# run_powershell_command(command)
+
 if __name__ == "__main__":
     wishme(datetime)
     cond=1
     while cond==1:
         query = takecommand().lower()
+        query = "bard-cli" + '"'+query+'"'
+        results = run_powershell_command(query)
 
         if 'wikipedia' in query:
             speak("searching wikipedia ..")
@@ -67,3 +95,7 @@ if __name__ == "__main__":
             cond = 0
         
 sys.exit()         
+
+
+
+
