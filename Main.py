@@ -5,6 +5,8 @@ import sys
 import speech_recognition as sr
 import datetime
 import wikipedia
+import subprocess
+import Test
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -42,28 +44,59 @@ def takecommand():
             return 'none'
         return query
 
+
+# def run_powershell_command(command):
+#     print(command)
+#     try:
+#         # Run the PowerShell command
+#         result = subprocess.run(["powershell", command], capture_output=True, text=True)
+
+#         # Check the return code
+#         if result.returncode == 1:
+#             # Display the output
+#            print("Output:", result.stdout)
+#         else:
+#             # Display the error
+#             print(result.stderr)
+#     except Exception as e:
+#         print("An error occurred:", str(e))
+
+# # Example usage
+# input_data = input("Enter data:")
+# command = "bard-cli " + '"'+input_data +'"'
+# print(command)
+
 if __name__ == "__main__":
     wishme(datetime)
     cond=1
     while cond==1:
         query = takecommand().lower()
+        
+        speak= (print(Test.run_powershell_command(query)))
 
-        if 'wikipedia' in query:
-            speak("searching wikipedia ..")
-            query = query.replace("wikipedia","")
-            results = wikipedia.summary(query,sentences =2)
-            speak= ('according to wikipedia ')
-            print(results)
-        elif 'open youtube' in query:
-            webbrowser.open("youtube.com")
-        elif 'open google' in query:
-            webbrowser.open("www.google.co.in/")
-        elif 'open chatgpt' in query:
-            webbrowser.open("https://chat.openai.com/")
-        elif 'open command prompt' in query:
-            os.system('start cmd')
-        elif 'goodbye luffy' in query:
+                                    # print(query)
+                                    
+
+                                    # if 'wikipedia' in query:
+                                    #     speak("searching wikipedia ..")
+                                    #     query = query.replace("wikipedia","")
+                                    #     results = wikipedia.summary(query,sentences =2)
+                                    #     speak= ('according to wikipedia ')
+                                    #     print(results)
+                                    # elif 'open youtube' in query:
+                                    #     webbrowser.open("youtube.com")
+                                    # elif 'open google' in query:
+                                    #     webbrowser.open("www.google.co.in/")
+                                    # elif 'open chatgpt' in query:
+                                    #     webbrowser.open("https://chat.openai.com/")
+                                    # elif 'open command prompt' in query:
+                                    #     os.system('start cmd')
+        if 'goodbye luffy' in query:
             speak("Thank you, have a nice day")
             cond = 0
         
 sys.exit()         
+
+
+
+
